@@ -4,9 +4,8 @@ namespace RestaurantSystem.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using RestaurantSystem.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using RestaurantSystem.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +15,7 @@ namespace RestaurantSystem.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Orders = new HashSet<Order>();
         }
 
         // Audit info
@@ -33,5 +33,10 @@ namespace RestaurantSystem.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        /// <summary>
+        /// Gets or sets the orders for each customer.
+        /// </summary>
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

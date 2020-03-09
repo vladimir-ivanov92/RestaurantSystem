@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using RestaurantSystem.Data.Common.Models;
-    using RestaurantSystem.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data.Common.Models;
+    using RestaurantSystem.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +24,12 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Order> Items { get; set; }
+
+        public DbSet<Order> Menus { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
