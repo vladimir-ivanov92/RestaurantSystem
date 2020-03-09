@@ -27,9 +27,9 @@
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<Order> Items { get; set; }
+        public DbSet<Item> Items { get; set; }
 
-        public DbSet<Order> Menus { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
