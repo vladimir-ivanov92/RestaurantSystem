@@ -2,15 +2,27 @@
 {
     using System.Diagnostics;
 
-    using RestaurantSystem.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using RestaurantSystem.Services.Data;
+    using RestaurantSystem.Web.ViewModels;
+    using RestaurantSystem.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly IItemService itemService;
+
+        public HomeController(IItemService itemService)
+        {
+            this.itemService = itemService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new IndexViewModel
+            {
+                Item = this.itemService.GetAll<IndexItemViewModel>(),
+            };
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()
