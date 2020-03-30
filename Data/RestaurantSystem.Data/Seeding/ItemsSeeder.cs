@@ -11,9 +11,7 @@
     public class ItemsSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
-
         {
-
             if (dbContext.Items.Any())
             {
                 return;

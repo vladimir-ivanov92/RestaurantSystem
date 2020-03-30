@@ -9,6 +9,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Collections.Generic;
 
     internal class RolesSeeder : ISeeder
     {
@@ -16,15 +17,20 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+            List<string> roles = new List<string> { GlobalConstants.AdministratorRoleName, GlobalConstants.AdministratorRoleNameDriver };
+
+            foreach (string role in roles)
+            {
+                await this.SeedRoleAsync(roleManager, role);
+            }
         }
 
-        private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)
+        private async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string role)
         {
-            var role = await roleManager.FindByNameAsync(roleName);
-            if (role == null)
+            var exist = await roleManager.FindByNameAsync(role);
+            if (exist == null)
             {
-                var result = await roleManager.CreateAsync(new ApplicationRole(roleName));
+                var result = await roleManager.CreateAsync(new ApplicationRole(role));
                 if (!result.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));

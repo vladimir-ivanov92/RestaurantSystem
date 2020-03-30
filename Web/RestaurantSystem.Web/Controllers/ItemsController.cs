@@ -9,11 +9,11 @@
     using RestaurantSystem.Services.Data;
     using RestaurantSystem.Web.ViewModels.Items;
 
-    public class ItemsContoller : BaseController
+    public class ItemsController : BaseController
     {
         private readonly IItemService itemService;
 
-        public ItemsContoller(IItemService itemService)
+        public ItemsController(IItemService itemService)
         {
             this.itemService = itemService;
         }

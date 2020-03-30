@@ -20,7 +20,7 @@
         {
             var viewModel = new IndexViewModel
             {
-                Item = this.itemService.GetAll<IndexItemViewModel>(),
+                Items = this.itemService.GetAll<IndexItemViewModel>(),
             };
             return this.View(viewModel);
         }

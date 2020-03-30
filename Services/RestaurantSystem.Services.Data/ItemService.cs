@@ -32,7 +32,8 @@
 
         public T GetByName<T>(string name)
         {
-            var item = this.itemsRepository.All().Where(x => x.Name == name).To<T>().FirstOrDefault();
+            string nameDB = name.Replace('-', ' ');
+            var item = this.itemsRepository.All().Where(x => x.Name == nameDB).To<T>().FirstOrDefault();
             return item;
         }
     }

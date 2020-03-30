@@ -6,6 +6,6 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<IndexItemViewModel> Item { get; set; }
+        public IEnumerable<IndexItemViewModel> Items { get; set; }
     }
 }
