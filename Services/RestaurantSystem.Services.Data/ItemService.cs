@@ -36,5 +36,21 @@
             var item = this.itemsRepository.All().Where(x => x.Name == nameDB).To<T>().FirstOrDefault();
             return item;
         }
+
+        public int GetCount()
+        {
+            return this.itemsRepository.All().Count();
+        }
+
+        public IEnumerable<T> GetItemsPerPage<T>(int? take = null, int skip = 0)
+        {
+            IQueryable<Item> query = this.itemsRepository.All().OrderBy(x => x.Name).Skip(skip);
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            return query.To<T>().ToList();
+        }
     }
 }

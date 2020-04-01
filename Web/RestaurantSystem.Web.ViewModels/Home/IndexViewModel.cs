@@ -7,5 +7,9 @@
     public class IndexViewModel
     {
         public IEnumerable<IndexItemViewModel> Items { get; set; }
+
+        public int PagesCount { get; set; }
+
+        public int CurrentPage { get; set; }
     }
 }
