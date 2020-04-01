@@ -1,6 +1,7 @@
 ﻿namespace RestaurantSystem.Data.Seeding
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -20,22 +21,28 @@
 
         private static async Task SeedUserAsync(UserManager<ApplicationUser> userManager)
         {
-            var exists = await userManager.FindByNameAsync("John@abv.bg");
-            if (exists == null)
-            {
-                var result = await userManager.CreateAsync(
-                    new ApplicationUser
-                    {
-                        UserName = "John@abv.bg",
-                        Email = "John@abv.bg",
-                        EmailConfirmed = true,
-                    }, "John@abv.bg");
+            List<string> users = new List<string> { "John@abv.bg", "Kim@abv.bg" };
 
-                if (!result.Succeeded)
+            foreach (var user in users)
+            {
+                var exists = await userManager.FindByNameAsync(user);
+                if (exists == null)
                 {
-                    throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                    var result = await userManager.CreateAsync(
+                        new ApplicationUser
+                        {
+                            UserName = user,
+                            Email = user,
+                            EmailConfirmed = true,
+                        }, user);
+
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                    }
+
+                    return;
                 }
-                return;
             }
         }
     }

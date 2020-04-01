@@ -1,6 +1,7 @@
 ﻿namespace RestaurantSystem.Data.Seeding
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -19,18 +20,27 @@
             var user = await userManager.FindByNameAsync("John@abv.bg");
             var role = await roleManager.FindByNameAsync("Driver");
 
-            var exists = dbContext.UserRoles.Any(x => x.UserId == user.Id && x.RoleId == role.Id);
+            var user2 = await userManager.FindByNameAsync("Kim@abv.bg");
+            var role2 = await roleManager.FindByNameAsync("Administrator");
 
-            if (exists)
+            var exists = dbContext.UserRoles.Any(x => x.UserId == user.Id && x.RoleId == role.Id);
+            var exists2 = dbContext.UserRoles.Any(x => x.UserId == user2.Id && x.RoleId == role2.Id);
+
+            if (exists || exists2)
             {
                 return;
             }
 
-            dbContext.UserRoles.Add(new IdentityUserRole<string>
+            Dictionary<ApplicationUser, ApplicationRole> userRoles = new Dictionary<ApplicationUser, ApplicationRole>() { { user, role }, { user2, role2 } };
+
+            foreach (var kvp in userRoles)
             {
-                RoleId = role.Id,
-                UserId = user.Id,
-            });
+                dbContext.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    RoleId = kvp.Value.Id,
+                    UserId = kvp.Key.Id,
+                });
+            }
         }
     }
 }
