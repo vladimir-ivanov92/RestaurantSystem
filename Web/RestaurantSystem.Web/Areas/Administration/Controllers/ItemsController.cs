@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using RestaurantSystem.Data;
-using RestaurantSystem.Data.Models;
-
-namespace RestaurantSystem.Web.Areas.Administration.Controllers
+﻿namespace RestaurantSystem.Web.Areas.Administration.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantSystem.Data;
+    using RestaurantSystem.Data.Models;
+
     [Area("Administration")]
+    [Authorize(Roles = "Administrator")]
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
