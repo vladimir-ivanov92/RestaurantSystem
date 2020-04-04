@@ -9,26 +9,29 @@
 </div>
 
 <style>
-     .aspect-ratio-box {
+    .aspect-ratio-box {
         background: white;
-     }
-     .aspect-ratio-box::before {
-        content: "";
-        width: 1px;
-        margin-left: -1px;
-        float: left;
-        height: 0;
-        padding-top: 12.5%;
-        overflow:hidden;
-      }
-     .aspect-ratio-box::after { /* to clear float */
-        content: "";
-        display: table;
-        clear: both;
-     }
-     .card .aspect-ratio-box img {
-         max-height: 160px;
-     }
+    }
+
+        .aspect-ratio-box::before {
+            content: "";
+            width: 1px;
+            margin-left: -1px;
+            float: left;
+            height: 0;
+            padding-top: 12.5%;
+            overflow: hidden;
+        }
+
+        .aspect-ratio-box::after { /* to clear float */
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    .card .aspect-ratio-box img {
+        max-height: 160px;
+    }
 </style>
 
 <div class="row">
@@ -43,6 +46,7 @@
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <a href="@item.Url" class="btn btn-primary">Details</a>
+                <a href="/Orders/AddItem?itemId=@item.ItemId" class="btn btn-primary">Add to card</a>
             </div>
         </div>
     }
@@ -88,3 +92,30 @@
         }
     </ul>
 </nav>
+
+
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label htmlFor="product">Your check is</label>
+                <input type="text"
+                       id="NetAmount"
+                       class="form-control"
+                       value="100.00 $"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button id="submit" type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+            <div class="col-md-6">
+                <div id="status"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="lib/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/site.js"></script>

@@ -20,6 +20,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using RestaurantSystem.Web.Hubs;
 
     public class Startup
     {
@@ -59,7 +60,9 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddSignalR();
             services.AddTransient<IItemService, ItemService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +108,7 @@
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("RestaurantItem", "v/{name:minlength(3)}", new { controller = "Items", action = "ByName" });
+                        endpoints.MapHub<RestaurantHub>("/restauranthub");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });
