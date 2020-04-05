@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantSystem.Data;
 
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200405104925_ManyToManyItemOrder")]
+    partial class ManyToManyItemOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,6 +264,9 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PreparationTime")
                         .HasColumnType("int");
 
@@ -277,6 +282,8 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasKey("ItemId");
 
                     b.HasIndex("MenuId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Items");
                 });
@@ -318,6 +325,9 @@ namespace RestaurantSystem.Data.Migrations
                     b.Property<decimal>("NetAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -328,21 +338,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.OrderItem", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.Setting", b =>
@@ -435,6 +430,10 @@ namespace RestaurantSystem.Data.Migrations
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("RestaurantSystem.Data.Models.Order", null)
+                        .WithMany("OrderedItems")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("RestaurantSystem.Data.Models.Order", b =>
@@ -442,21 +441,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.HasOne("RestaurantSystem.Data.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.OrderItem", b =>
-                {
-                    b.HasOne("RestaurantSystem.Data.Models.Item", "Item")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RestaurantSystem.Data.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

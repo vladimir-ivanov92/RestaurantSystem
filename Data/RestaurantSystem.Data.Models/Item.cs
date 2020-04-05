@@ -6,6 +6,11 @@
 
     public class Item
     {
+        public Item()
+        {
+            this.OrderItems = new List<OrderItem>();
+        }
+
         public int ItemId { get; set; }
 
         public string Name { get; set; }
@@ -28,5 +33,7 @@
         public int MenuId { get; set; }
 
         public virtual Menu Menu { get; set; }
+
+        public IList<OrderItem> OrderItems { get; set; }
     }
 }

@@ -29,11 +29,11 @@ setupConnection();
 
 document.getElementById("submit").addEventListener("click", e => {
     e.preventDefault();
-    const netAmount = document.getElementById("NetAmount").value;
+    const netAmount = document.getElementById("netAmount").value;
 
-    fetch("/Orders",
+    fetch("/Orders/Order",
         {
-            method: "POST", 
+            method: "POST",
             body: JSON.stringify({ netAmount }),
             headers: {
                 'content-type': 'application/json'

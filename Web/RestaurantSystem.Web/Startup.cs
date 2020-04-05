@@ -106,9 +106,9 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<RestaurantHub>("/restauranthub");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("RestaurantItem", "v/{name:minlength(3)}", new { controller = "Items", action = "ByName" });
-                        endpoints.MapHub<RestaurantHub>("/restauranthub");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });

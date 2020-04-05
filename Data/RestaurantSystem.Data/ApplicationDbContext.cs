@@ -29,6 +29,8 @@
 
         public DbSet<Item> Items { get; set; }
 
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         public DbSet<Menu> Menus { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -101,6 +103,9 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OrderItem>().
+                HasKey(c => new { c.ItemId, c.OrderId});
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

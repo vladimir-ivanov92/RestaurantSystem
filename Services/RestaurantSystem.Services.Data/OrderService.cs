@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading;
+    using System.Threading.Tasks;
     using RestaurantSystem.Data.Common.Repositories;
     using RestaurantSystem.Data.Models;
 
@@ -19,7 +20,7 @@
         private readonly Random random;
         private readonly IList<int> indexes;
 
-        private readonly string[] status =
+        private  string[] status =
           {
                 "Preparing the ingredients",
                 "Cooking",
@@ -40,7 +41,12 @@
         {
             var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
             var item = this.itemsRepository.All().Where(x => x.ItemId == itemId).FirstOrDefault();
-            order.OrderedItems.Add(item);
+            order.OrderItems.Add(new OrderItem
+            {
+                ItemId = item.ItemId,
+                OrderId = order.Id,
+            });
+            this.ordersRepository.SaveChangesAsync();
         }
 
         public bool CheckForExistingOrder(string userId)
@@ -55,34 +61,31 @@
             return true;
         }
 
-        public void CreateOrder(string userId)
+        public async Task CreateOrder(string userId)
         {
             var order = new Order
             {
                 UserId = userId,
-                NetAmount = 1,
-                User = new ApplicationUser(),
-                OrderId = 1,
-                Id = 1,
             };
-            this.ordersRepository.AddAsync(order);
+            await this.ordersRepository.AddAsync(order);
+            await this.ordersRepository.SaveChangesAsync();
         }
 
         public CheckResult GetUpdate(int orderId)
         {
             Thread.Sleep(1000);
-            var index = this.indexes[orderId - 1];
-            if (this.random.Next(0, 4) == 2)
+            //var index = 1;
+            if (true)
             {
-                if (this.status.Length > this.indexes[orderId - 1])
+                if (this.status.Length > 0)
                 {
                     var result = new CheckResult
                     {
                         New = true,
-                        Update = this.status[index],
-                        Finished = this.status.Length - 1 == index,
+                        Update = this.status[0],
+                        Finished = this.status.Length - 1 == 0,
                     };
-                    this.indexes[orderId - 1]++;
+                    this.status = this.status.Skip(1).ToArray();
                     return result;
                 }
             }

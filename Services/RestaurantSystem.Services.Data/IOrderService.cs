@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-
+    using System.Threading.Tasks;
     using RestaurantSystem.Data.Models;
 
     public interface IOrderService
@@ -12,7 +12,7 @@
 
         bool CheckForExistingOrder(string userId);
 
-        void CreateOrder(string userId);
+        Task CreateOrder(string userId);
 
         int NewOrder();
 

@@ -42,23 +42,13 @@
 
             if (!orderExist)
             {
-                this.orderService.CreateOrder(userId);
-                ApplicationUser user = await GetCurrentUser();
-
-                var order = new Order
-                {
-                    UserId = userId,
-                    NetAmount = 1,
-                    User = user,
-                    OrderId = 1,
-                };
-                this.dbContext.Add(order);
-                this.dbContext.SaveChanges();
+               await this.orderService.CreateOrder(userId);
             }
 
             this.orderService.AddItemToOrder(itemId, userId);
 
-            return this.Redirect("/");
+            return new EmptyResult();
+            //return this.Response.Redirect(this.Request.RawUrl)
         }
 
         public async Task<ApplicationUser> GetCurrentUser()
