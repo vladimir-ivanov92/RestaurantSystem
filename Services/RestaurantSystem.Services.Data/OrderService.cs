@@ -12,6 +12,7 @@
     public class OrderService : IOrderService
     {
         private readonly IRepository<Item> itemsRepository;
+        private readonly IRepository<OrderItem> orderItemRepository;
         private readonly IDeletableEntityRepository<Order> ordersRepository;
 
         /// <summary>
@@ -29,24 +30,31 @@
                 "Picked up",
           };
 
-        public OrderService(IRepository<Item> itemsRepository, IDeletableEntityRepository<Order> ordersRepository)
+        public OrderService(IRepository<Item> itemsRepository, IDeletableEntityRepository<Order> ordersRepository, IRepository<OrderItem> orderItemRepository)
         {
             this.itemsRepository = itemsRepository;
+            this.orderItemRepository = orderItemRepository;
             this.ordersRepository = ordersRepository;
             this.random = new Random();
             this.indexes = new List<int>();
         }
 
-        public void AddItemToOrder(int itemId, string userId)
+        public async Task AddItemToOrder(int itemId, string userId)
         {
             var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
             var item = this.itemsRepository.All().Where(x => x.ItemId == itemId).FirstOrDefault();
+
+            if (this.orderItemRepository.All().Any(x => x.ItemId == item.ItemId) && this.orderItemRepository.All().Where(x => x.ItemId == item.ItemId).Any(y => y.OrderId == order.Id))
+            {
+                return;
+            }
+
             order.OrderItems.Add(new OrderItem
             {
                 ItemId = item.ItemId,
                 OrderId = order.Id,
             });
-            this.ordersRepository.SaveChangesAsync();
+            await this.ordersRepository.SaveChangesAsync();
         }
 
         public bool CheckForExistingOrder(string userId)

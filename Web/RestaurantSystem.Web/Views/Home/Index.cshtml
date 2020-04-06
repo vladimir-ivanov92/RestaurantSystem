@@ -46,7 +46,7 @@
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <a href="@item.Url" class="btn btn-primary">Details</a>
-                <a href="/Orders/AddItem?itemId=@item.ItemId" class="btn btn-primary">Add to card</a>
+                <a href="/Orders/AddItem?itemId=@item.ItemId&page=@Model.CurrentPage" class="btn btn-primary">Add to card</a>
             </div>
         </div>
     }
@@ -72,7 +72,7 @@
         {
             var active = i == this.Model.CurrentPage ? "active" : string.Empty;
             <li class="page-item @active">
-                <a class="page-link"
+                <a class="page-link" 
                    asp-route-page="@i">@i</a>
             </li>
         }

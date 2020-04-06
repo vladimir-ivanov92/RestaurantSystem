@@ -8,7 +8,7 @@
 
     public interface IOrderService
     {
-        void AddItemToOrder(int itemId, string userId);
+        Task AddItemToOrder(int itemId, string userId);
 
         bool CheckForExistingOrder(string userId);
 

@@ -34,7 +34,7 @@
             return this.Accepted(orderId);
         }
 
-        public async Task<IActionResult> AddItemAsync(int itemId)
+        public async Task<IActionResult> AddItemAsync([FromQuery(Name = "page")] int page, int itemId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
 
@@ -45,13 +45,12 @@
                await this.orderService.CreateOrder(userId);
             }
 
-            this.orderService.AddItemToOrder(itemId, userId);
+            await this.orderService.AddItemToOrder(itemId, userId);
 
-            return new EmptyResult();
-            //return this.Response.Redirect(this.Request.RawUrl)
+            return this.Redirect($"/?page={page}");
         }
 
-        public async Task<ApplicationUser> GetCurrentUser()
+        public async Task<ApplicationUser> GetCurrentUser() 
         {
             ApplicationUser usr = await GetCurrentUserAsync();
             return usr;
