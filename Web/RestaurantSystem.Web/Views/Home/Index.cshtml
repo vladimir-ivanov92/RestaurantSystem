@@ -1,11 +1,21 @@
 ﻿@using RestaurantSystem.Common
 @model RestaurantSystem.Web.ViewModels.Home.IndexViewModel
+
 @{
     this.ViewData["Title"] = $"Welcome to {GlobalConstants.SystemName}!";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+
 <div class="text-center">
-    <h1 class="display-4">@this.ViewData["Title"]</h1>
+    @if (Model.CheckForOrder == true)
+    {
+        <a href="/Orders/CheckOut"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:40px;color:cornflowerblue;"></i></a>
+    }
+    else
+    {
+        <a href=""><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:40px;color:cornflowerblue;"></i></a>
+    }
 </div>
 
 
@@ -107,7 +117,7 @@
         </ul>
     </nav>
     <script>
-     const inputRefs = document.querySelectorAll('input');
+        const inputRefs = document.querySelectorAll('input');
 
         function addEventListenerToInput(ref) {
             ref.addEventListener('change', changeHandler(ref));

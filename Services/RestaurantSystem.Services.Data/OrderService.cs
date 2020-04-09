@@ -60,7 +60,7 @@
 
         public bool CheckForExistingOrder(string userId)
         {
-            var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
+            var order = this.ordersRepository.All().Where(x => x.UserId == userId).Where(y => y.IsDeleted == false).FirstOrDefault();
 
             if (order == null || order.IsDeleted == true)
             {

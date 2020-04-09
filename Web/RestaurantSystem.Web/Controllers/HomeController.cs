@@ -1,7 +1,7 @@
 ﻿namespace RestaurantSystem.Web.Controllers
 {
     using System.Diagnostics;
-
+    using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Services.Data;
     using RestaurantSystem.Web.ViewModels;
@@ -12,17 +12,21 @@
         private const int ItemsPerPage = 3;
 
         private readonly IItemService itemService;
+        private readonly IOrderService orderService;
 
-        public HomeController(IItemService itemService)
+        public HomeController(IItemService itemService, IOrderService orderService)
         {
             this.itemService = itemService;
+            this.orderService = orderService;
         }
 
         public IActionResult Index(int page = 1)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var viewModel = new IndexViewModel
             {
                 Items = this.itemService.GetAll<IndexItemViewModel>(),
+                CheckForOrder = this.orderService.CheckForExistingOrder(userId),
             };
 
             viewModel.Items = this.itemService.GetItemsPerPage<IndexItemViewModel>(ItemsPerPage, (page - 1) * ItemsPerPage);

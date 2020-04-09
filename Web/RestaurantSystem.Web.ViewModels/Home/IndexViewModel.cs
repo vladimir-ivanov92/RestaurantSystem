@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Text;
 
+    using RestaurantSystem.Web.ViewModels.Orders;
+
     public class IndexViewModel
     {
         public IEnumerable<IndexItemViewModel> Items { get; set; }
@@ -14,5 +16,6 @@
 
         public int CurrentQuantity { get; set; }
 
+        public bool CheckForOrder { get; set; }
     }
 }
