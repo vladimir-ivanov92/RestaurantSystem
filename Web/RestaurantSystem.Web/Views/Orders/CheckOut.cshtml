@@ -1,0 +1,39 @@
+﻿@model RestaurantSystem.Web.ViewModels.Orders.OrderViewModel
+
+
+@{
+    this.ViewData["Title"] = "Check Out";
+}
+
+<link rel="/CSS/style.css" href="style.css">
+
+<div class="text-center">
+    <h1 class="display-4">@this.ViewData["Title"]</h1>
+</div>
+
+
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label htmlFor="product">Your check is</label>
+                <input type="text"
+                       id="netAmount"
+                       class="form-control"
+                       value="$@String.Format("{0:0.00}", Model.NetAmount)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button id="submit" type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+            <div class="col-md-6">
+                <div id="status"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/site1.js"></script>

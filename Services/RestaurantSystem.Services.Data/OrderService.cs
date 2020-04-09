@@ -21,7 +21,7 @@
         private readonly Random random;
         private readonly IList<int> indexes;
 
-        private  string[] status =
+        private string[] status =
           {
                 "Preparing the ingredients",
                 "Cooking",
@@ -39,7 +39,7 @@
             this.indexes = new List<int>();
         }
 
-        public async Task AddItemToOrder(int itemId, string userId)
+        public async Task AddItemToOrder(int itemId, string userId, int quantity)
         {
             var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
             var item = this.itemsRepository.All().Where(x => x.ItemId == itemId).FirstOrDefault();
@@ -53,6 +53,7 @@
             {
                 ItemId = item.ItemId,
                 OrderId = order.Id,
+                Quantity = quantity,
             });
             await this.ordersRepository.SaveChangesAsync();
         }
@@ -61,7 +62,7 @@
         {
             var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
 
-            if (order == null)
+            if (order == null || order.IsDeleted == true)
             {
                 return false;
             }
@@ -82,7 +83,6 @@
         public CheckResult GetUpdate(int orderId)
         {
             Thread.Sleep(1000);
-            //var index = 1;
             if (true)
             {
                 if (this.status.Length > 0)

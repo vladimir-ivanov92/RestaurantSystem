@@ -7,8 +7,12 @@
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Mapping;
 
-    public class OrderViewModel 
+    public class OrderViewModel : IMapFrom<Order>
     {
-        public string NetAmount { get; set; }
+        public decimal NetAmount { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
