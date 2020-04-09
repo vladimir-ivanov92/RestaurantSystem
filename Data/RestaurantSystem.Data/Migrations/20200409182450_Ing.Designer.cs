@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantSystem.Data;
 
 namespace RestaurantSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200409182450_Ing")]
+    partial class Ing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,29 +245,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("RestaurantSystem.Data.Models.Ingredient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("Ingredients");
-                });
-
             modelBuilder.Entity("RestaurantSystem.Data.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
@@ -371,29 +350,6 @@ namespace RestaurantSystem.Data.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("RestaurantSystem.Data.Models.RecipeStep", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Minutes")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("RecipeSteps");
-                });
-
             modelBuilder.Entity("RestaurantSystem.Data.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -477,13 +433,6 @@ namespace RestaurantSystem.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantSystem.Data.Models.Ingredient", b =>
-                {
-                    b.HasOne("RestaurantSystem.Data.Models.Item", "Item")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("ItemId");
-                });
-
             modelBuilder.Entity("RestaurantSystem.Data.Models.Item", b =>
                 {
                     b.HasOne("RestaurantSystem.Data.Models.Menu", "Menu")
@@ -513,13 +462,6 @@ namespace RestaurantSystem.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RestaurantSystem.Data.Models.RecipeStep", b =>
-                {
-                    b.HasOne("RestaurantSystem.Data.Models.Item", "Item")
-                        .WithMany("RecipeSteps")
-                        .HasForeignKey("ItemId");
                 });
 #pragma warning restore 612, 618
         }
