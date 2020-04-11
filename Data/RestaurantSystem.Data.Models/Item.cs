@@ -9,6 +9,8 @@
         public Item()
         {
             this.OrderItems = new List<OrderItem>();
+            this.Ingredients = new HashSet<Ingredient>();
+            this.RecipeSteps = new HashSet<RecipeStep>();
         }
 
         public int ItemId { get; set; }
@@ -35,5 +37,9 @@
         public virtual Menu Menu { get; set; }
 
         public IList<OrderItem> OrderItems { get; set; }
+
+        public virtual ICollection<Ingredient> Ingredients { get; set; }
+
+        public virtual ICollection<RecipeStep> RecipeSteps { get; set; }
     }
 }

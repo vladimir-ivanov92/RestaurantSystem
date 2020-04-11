@@ -20,7 +20,9 @@
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Item> query = this.itemsRepository.All().OrderBy(x => x.Name);
+            IQueryable<Item> query = this.itemsRepository.All()
+                .OrderBy(x => x.MenuId)
+                .ThenBy(y => y.Price);
 
             if (count.HasValue)
             {
@@ -44,7 +46,8 @@
 
         public IEnumerable<T> GetItemsPerPage<T>(int? take = null, int skip = 0)
         {
-            IQueryable<Item> query = this.itemsRepository.All().OrderBy(x => x.Name).Skip(skip);
+            IQueryable<Item> query = this.itemsRepository.All().OrderBy(x => x.MenuId)
+                .ThenBy(y => y.Price).Skip(skip);
             if (take.HasValue)
             {
                 query = query.Take(take.Value);

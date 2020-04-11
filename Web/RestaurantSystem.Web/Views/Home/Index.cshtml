@@ -47,12 +47,12 @@
 
 
 <body>
-    <div class="row">
+    <div class="row" style="width:90%; margin:auto">
 
         @foreach (var item in Model.Items)
 
         {
-            <div class="card" style="width: 18rem;" margin="1rem">
+            <div class="card" style="width: 18rem; margin:1rem;" >
                 <div class="aspect-ratio-box">
                     <img src="@item.ImageUrl" height="50" class="card-img-top" alt="@item.Name">
                 </div>
@@ -68,7 +68,7 @@
                             &nbsp;
                         </div>
                         <div class="col-xs-2">
-                            <input type="number" name="quantity" id="quantity" class="form-control" style="width:70px;" value="1" min="1" max="9" />
+                            <input type="number" name="quantity" id="quantity" class="form-control" style="width:70px;" value="0" min="1" max="9" />
                         </div>
                     </div>
                 </div>

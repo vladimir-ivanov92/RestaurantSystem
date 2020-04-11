@@ -9,7 +9,7 @@
 
     public class HomeController : BaseController
     {
-        private const int ItemsPerPage = 3;
+        private const int ItemsPerPage = 12;
 
         private readonly IItemService itemService;
         private readonly IOrderService orderService;
@@ -28,7 +28,6 @@
                 Items = this.itemService.GetAll<IndexItemViewModel>(),
                 CheckForOrder = this.orderService.CheckForExistingOrder(userId),
             };
-
             viewModel.Items = this.itemService.GetItemsPerPage<IndexItemViewModel>(ItemsPerPage, (page - 1) * ItemsPerPage);
 
             var count = this.itemService.GetCount();
@@ -36,7 +35,7 @@
             if (viewModel.PagesCount == 0)
             {
                 viewModel.PagesCount = 1;
-            } 
+            }
 
             viewModel.CurrentPage = page;
 

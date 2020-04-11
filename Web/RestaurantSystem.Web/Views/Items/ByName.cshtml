@@ -11,7 +11,7 @@
     <h1 class="display-4">@this.ViewData["Title"]</h1>
 </div>
 
-<div>@Model.ImageUrl</div>
+<img src="@Model.ImageUrl" style="width:100%; height:auto;"></img>
 
 
 <div class="receipe-content-area">
@@ -37,7 +37,14 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star-o" aria-hidden="true"></i>
                     </div>
-                    <a href="#" class="btn delicious-btn">For Begginers</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Administrator"))
+                        {
+                            <a href="/Ingredients/AddIngredient/?itemName=@Model.Name" class="btn delicious-btn" style="width: 2rem;">Add Ingredient</a>
+                            
+                        }
+                    }
                 </div>
             </div>
         </div>
@@ -61,92 +68,27 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
                 </div>
             </div>
-
-            Ingredients
             <div class="col-12 col-lg-4">
                 <div class="ingredients">
                     <h4>Ingredients</h4>
-
-                    Custom Checkbox
+                    @foreach (var item in Model.Ingredients)
+                    {
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
+                        <input type="checkbox" class="custom-control-input" id="customCheck(@item.Id)">
+                        <label class="custom-control-label" for="customCheck(@item.Id)">@item.Quantity @item.Name</label>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Administrator"))
+                            {
+                                <a href="/Ingredients/EditIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Edit</a>
+                                <a href="/Ingredients/DeleteIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Delete</a>
+                            }
+                        }
                     </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2">2 large eggs</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                        <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck4">
-                        <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                        <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck6">
-                        <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck7">
-                        <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
-                    </div>
-
-                    Custom Checkbox
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck8">
-                        <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
-
- ##### Footer Area Start #####
-<footer class="footer-area">
-    <div class="container h-100">
-        <div class="row h-100">
-            <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                Footer Social Info
-                <div class="footer-social-info text-right">
-                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                </div>
-                Footer Logo
-                <div class="footer-logo">
-                    <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-                </div>
-                Copywrite
-                <p>
-                    Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
 

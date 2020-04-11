@@ -63,7 +63,7 @@
             services.AddSignalR();
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IOrderService, RestaurantSystem.Services.Data.OrderService>(); 
+            services.AddTransient<IIngredientService, IngredientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
