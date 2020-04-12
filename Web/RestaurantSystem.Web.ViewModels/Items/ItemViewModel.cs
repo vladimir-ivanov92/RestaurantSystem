@@ -7,6 +7,7 @@
     using RestaurantSystem.Data.Models;
     using RestaurantSystem.Services.Mapping;
     using RestaurantSystem.Web.ViewModels.Ingredients;
+    using RestaurantSystem.Web.ViewModels.RecipeSteps;
 
     public class ItemViewModel : IMapFrom<Item>
     {
@@ -21,5 +22,7 @@
         public decimal Price { get; set; }
 
         public IEnumerable<IngredientViewModel> Ingredients { get; set; }
+
+        public IEnumerable<RecipeStepViewModel> RecipeSteps { get; set; }
     }
 }

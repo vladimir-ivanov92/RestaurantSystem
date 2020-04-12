@@ -20,7 +20,7 @@
         {
             this.ingredientService = ingredientService;
             this.itemService = itemService;
-    }
+        }
 
         [HttpGet]
         public IActionResult AddIngredient([FromQuery(Name = "itemName")] string itemName)
