@@ -44,9 +44,23 @@
             var order = this.ordersRepository.All().Where(x => x.UserId == userId).FirstOrDefault();
             var item = this.itemsRepository.All().Where(x => x.ItemId == itemId).FirstOrDefault();
 
+            if (item.Quantity == 0)
+            {
+                return;
+            }
+
             if (this.orderItemRepository.All().Any(x => x.ItemId == item.ItemId) && this.orderItemRepository.All().Where(x => x.ItemId == item.ItemId).Any(y => y.OrderId == order.Id))
             {
                 return;
+            }
+
+            if (item.Quantity > quantity)
+            {
+                item.Quantity = item.Quantity - quantity;
+            }
+            else if (item.Quantity > 0)
+            {
+                quantity = item.Quantity;
             }
 
             order.OrderItems.Add(new OrderItem
@@ -55,6 +69,8 @@
                 OrderId = order.Id,
                 Quantity = quantity,
             });
+
+            await this.itemsRepository.SaveChangesAsync();
             await this.ordersRepository.SaveChangesAsync();
         }
 

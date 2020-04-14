@@ -34,6 +34,7 @@
                             UserName = user,
                             Email = user,
                             EmailConfirmed = true,
+                            Address = "Reduta 10",
                         }, user);
 
                     if (!result.Succeeded)

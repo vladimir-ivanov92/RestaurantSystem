@@ -21,6 +21,8 @@ namespace RestaurantSystem.Data.Models
         // Audit info
         public DateTime CreatedOn { get; set; }
 
+        public string Address { get; set; }
+
         public DateTime? ModifiedOn { get; set; }
 
         // Deletable entity
