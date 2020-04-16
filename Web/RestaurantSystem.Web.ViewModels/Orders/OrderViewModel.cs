@@ -14,5 +14,9 @@
         public decimal Quantity { get; set; }
 
         public decimal Price { get; set; }
+
+        public decimal Discount { get; set; }
+
+        public decimal DeliveryTax { get; set; }
     }
 }

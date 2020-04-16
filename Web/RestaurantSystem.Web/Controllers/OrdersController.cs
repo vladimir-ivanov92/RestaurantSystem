@@ -65,7 +65,9 @@
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var order = this.dbContext.Orders.Where(x => x.UserId == userId).FirstOrDefault();
+
             decimal sumPrice = 0.00M;
+            decimal discount = 0.00M;
 
             var itemPrice = this.dbContext.Orders.
                      Join(this.dbContext.OrderItems, u => u.Id, uir => uir.OrderId, (u, uir) => new { u, uir }).
@@ -82,9 +84,26 @@
                 sumPrice += item.Price * item.Quantity;
             }
 
+            if (sumPrice > 50)
+            {
+                discount = 0.02M * sumPrice;
+            }
+
+            if (sumPrice > 100)
+            {
+                discount = 0.04M * sumPrice;
+            }
+
+            if (sumPrice > 200)
+            {
+                discount = 0.10M * sumPrice;
+            }
+
             OrderViewModel netAmount = new OrderViewModel
             {
                 NetAmount = sumPrice,
+                Discount = discount,
+                DeliveryTax = 2,
             };
 
             Order alreadyDeliveredOrder = this.dbContext.Orders.FirstOrDefault(x => x.UserId == userId);

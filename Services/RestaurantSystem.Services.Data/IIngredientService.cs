@@ -11,6 +11,6 @@ namespace RestaurantSystem.Services.Data
 
         Task DeleteIngredientToItem(string name, int quantity, string itemName, int id);
 
-        T GetByName<T>(int id);
+        T GetById<T>(int id);
     }
 }

@@ -40,7 +40,7 @@
         [HttpGet]
         public IActionResult EditIngredient([FromQuery(Name = "itemName")] string itemName, [FromQuery(Name = "id")] int id)
         {
-            var viewIngredientViewModel = this.ingredientService.GetByName<IngredientViewModel>(id);
+            var viewIngredientViewModel = this.ingredientService.GetById<IngredientViewModel>(id);
             viewIngredientViewModel.ItemName = itemName;
             return this.View(viewIngredientViewModel);
         }

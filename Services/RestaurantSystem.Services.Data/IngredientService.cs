@@ -49,7 +49,7 @@
             await this.ingrediantsRepository.SaveChangesAsync();
         }
 
-        public T GetByName<T>(int id)
+        public T GetById<T>(int id)
         {
             var ingredient = this.ingrediantsRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
             return ingredient;
