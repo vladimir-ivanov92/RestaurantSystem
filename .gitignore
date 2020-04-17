@@ -359,3 +359,4 @@ appsettings.Production.json
 *.min.js
 GlobalConstants.cs
 /RestaurantSystem.Common/RestaurantSystem.Common.csproj
+/RestaurantSystem.Common
