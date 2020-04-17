@@ -21,6 +21,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using RestaurantSystem.Web.Hubs;
+    using RestaurantSystem.Common;
 
     public class Startup
     {
@@ -58,7 +59,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(GlobalConstants.SendGridAPIKey));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddSignalR();
             services.AddTransient<IItemService, ItemService>();
