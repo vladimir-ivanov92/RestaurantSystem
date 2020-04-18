@@ -45,6 +45,19 @@
                        value="$@String.Format("{0:0.00}", Model.NetAmount+Model.DeliveryTax-Model.Discount)" />
             </div>
         </div>
+
+        @if (Model.DiscountCode != "You did not won a discount code this time :(")
+        {
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label htmlFor="product">Congratulations you have won a discount code!</label>
+                    <input type="text"
+                           id="discountCode"
+                           class="form-control"
+                           value="@Model.DiscountCode" />
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="col-md-6">
                 <button id="submit" type="submit" class="btn btn-primary">

@@ -18,18 +18,20 @@
     public class OrdersController : BaseController
     {
         private readonly IOrderService orderService;
+        private readonly IDiscountService discountService;
         private readonly UserManager<ApplicationUser> userManager;
         ApplicationDbContext dbContext;
         private readonly IHubContext<RestaurantHub> restaurantHub;
         private readonly IEmailSender mailService;
 
-        public OrdersController(IOrderService orderService, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext, IHubContext<RestaurantHub> restaurantHub, IEmailSender mailService)
+        public OrdersController(IOrderService orderService, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext, IHubContext<RestaurantHub> restaurantHub, IEmailSender mailService, IDiscountService discountService)
         {
             this.orderService = orderService;
             this.userManager = userManager;
             this.dbContext = dbContext;
             this.restaurantHub = restaurantHub;
             this.mailService = mailService;
+            this.discountService = discountService;
         }
 
         [HttpPost]
@@ -79,32 +81,21 @@
                          Price = m.ro.Price,
                          Quantity = m.r.uir.Quantity,
                      });
-
             foreach (var item in itemPrice)
             {
                 sumPrice += item.Price * item.Quantity;
             }
 
-            if (sumPrice > 50)
-            {
-                discount = 0.02M * sumPrice;
-            }
-
-            if (sumPrice > 100)
-            {
-                discount = 0.04M * sumPrice;
-            }
-
-            if (sumPrice > 200)
-            {
-                discount = 0.10M * sumPrice;
-            }
+            var discountCode = this.discountService.CalculateDiscountCode(sumPrice, userId);
+            discount = await this.discountService.CalculateDiscount(discount, sumPrice, userId);
+            discount += discountCode;
 
             OrderViewModel netAmount = new OrderViewModel
             {
                 NetAmount = sumPrice,
                 Discount = discount,
                 DeliveryTax = 2,
+                DiscountCode = this.discountService.GetDiscountCode(userId),
             };
 
             Order alreadyDeliveredOrder = this.dbContext.Orders.FirstOrDefault(x => x.UserId == userId);
@@ -116,7 +107,10 @@
             this.dbContext.OrderItems.RemoveRange(alreadyDeliveredItems);
             await this.dbContext.SaveChangesAsync();
 
-            await this.mailService.SendEmailAsync(user.Email, "MyApp", "vladimir920522@gmail.com", "Testing", "<h1>Order was made</h1>", null);
+            if (user != null)
+            {
+                await this.mailService.SendEmailAsync(user.Email, "MyApp", "vladimir920522@gmail.com", "Testing", "<h1>Order was made</h1>", null);
+            }
             return this.View(netAmount);
         }
 

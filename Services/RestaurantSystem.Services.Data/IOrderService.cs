@@ -18,8 +18,5 @@
         int NewOrder();
 
         CheckResult GetUpdate(int orderId);
-
-
-
     }
 }

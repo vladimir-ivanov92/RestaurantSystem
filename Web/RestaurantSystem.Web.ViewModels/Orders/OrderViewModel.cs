@@ -18,5 +18,7 @@
         public decimal Discount { get; set; }
 
         public decimal DeliveryTax { get; set; }
+
+        public string DiscountCode { get; set; }
     }
 }
