@@ -86,8 +86,8 @@
                 sumPrice += item.Price * item.Quantity;
             }
 
-            var discountCode = this.discountService.CalculateDiscountCode(sumPrice, userId);
             discount = await this.discountService.CalculateDiscount(discount, sumPrice, userId);
+            var discountCode = this.discountService.CalculateDiscountCode(sumPrice, userId);
             discount += discountCode;
 
             OrderViewModel netAmount = new OrderViewModel

@@ -54,9 +54,9 @@
                 return;
             }
 
-            if (item.Quantity > quantity)
+            if (item.Quantity >= quantity)
             {
-                item.Quantity = item.Quantity - quantity;
+                item.Quantity -= quantity;
             }
             else if (item.Quantity > 0)
             {

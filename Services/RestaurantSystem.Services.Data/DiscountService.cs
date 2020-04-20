@@ -35,7 +35,7 @@
                 discount = 0.10M * sumPrice;
             }
 
-            if (!this.discountRepository.All().Any(x => x.UserId != userId))
+            if (!this.discountRepository.All().Any(x => x.UserId == userId))
             {
                 Random rnd = new Random();
                 //int luckyNumber = rnd.Next(1, 100);
@@ -88,12 +88,13 @@
         public string GetDiscountCode(string userId)
         {
             var discountCode = "You did not won a discount code this time :(";
-            if (this.discountRepository.All().Any(x => x.UserId == userId))
-            {
-                var discount = this.discountRepository.All().FirstOrDefault(x => x.UserId == userId);
-                discountCode = discount.DiscountId;
+            var discount = this.discountRepository.All().FirstOrDefault(x => x.UserId == userId);
 
+            if (discount != null && discount.IsApplied == false)
+            {
+                discountCode = discount.DiscountId;
             }
+
             return discountCode;
         }
     }

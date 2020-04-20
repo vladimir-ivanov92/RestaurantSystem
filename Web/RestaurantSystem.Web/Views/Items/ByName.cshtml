@@ -67,8 +67,8 @@
                             {
                                 if (User.IsInRole("Administrator"))
                                 {
-                                    <a href="/RecipeSteps/EditRecipeStep/?itemName=@Model.Name&id=@step.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Edit</a>
-                                    <a href="/RecipeSteps/DeleteRecipeStep/?itemName=@Model.Name&id=@step.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Delete</a>
+                                    <a href="/RecipeSteps/EditRecipeStep/?itemName=@Model.Name&id=@step.Id" class="btn delicious-btn" style="width: 2rem; margin-left:0; padding:0; float:right;">Edit</a>
+                                    <a href="/RecipeSteps/DeleteRecipeStep/?itemName=@Model.Name&id=@step.Id" class="btn delicious-btn" style="width: 2rem; margin-left:0; padding:0; float:right;">Delete</a>
                                 }
                             }
                         </div>
@@ -89,8 +89,8 @@
                         {
                             if (User.IsInRole("Administrator"))
                             {
-                                <a href="/Ingredients/EditIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Edit</a>
-                                <a href="/Ingredients/DeleteIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin:0; padding:0">Delete</a>
+                                <a href="/Ingredients/EditIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin-left:0; padding:0; float:right;">Edit</a>
+                                <a href="/Ingredients/DeleteIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin-left:0; padding:0; float:right;">Delete</a>
                             }
                         }
                     </div>

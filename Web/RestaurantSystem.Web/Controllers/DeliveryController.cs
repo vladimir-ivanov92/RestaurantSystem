@@ -1,16 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RestaurantSystem.Web.Controllers
+﻿namespace RestaurantSystem.Web.Controllers
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantSystem.Data.Models;
+    using RestaurantSystem.Services.Messaging;
+
     public class DeliveryController : BaseController
     {
+        private readonly IEmailSender mailService;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public DeliveryController(IEmailSender mailService, UserManager<ApplicationUser> userManager)
+        {
+            this.mailService = mailService;
+            this.userManager = userManager;
+        }
+
         public IActionResult Map()
         {
             return this.View();
         }
+
+        public async Task<IActionResult> GetInTouch(string message, string subject, string name)
+        {
+            var user = await this.GetCurrentUserAsync();
+            if (user != null)
+            {
+                await this.mailService.SendEmailAsync(user.Email, $"Get in touch", "vladimir920522@gmail.com", $"Get in touch", $"<h1>{message}</h1>", null);
+            }
+
+            return this.RedirectToAction("Map");
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => this.userManager.GetUserAsync(this.HttpContext.User);
     }
 }
