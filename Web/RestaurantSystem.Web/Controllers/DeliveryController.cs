@@ -23,12 +23,12 @@
             return this.View();
         }
 
-        public async Task<IActionResult> GetInTouch(string message, string subject, string name)
+        public async Task<IActionResult> GetInTouch(string email, string message, string subject, string name)
         {
             var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
-                await this.mailService.SendEmailAsync(user.Email, $"Get in touch", "vladimir920522@gmail.com", $"Get in touch", $"<h1>{message}</h1>", null);
+                await this.mailService.SendEmailAsync($"{email}", $"{name}", "vladimir920522@gmail.com", $"{subject}", $"<h1>{message}</h1>", null);
             }
 
             return this.RedirectToAction("Map");
