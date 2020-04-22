@@ -25,6 +25,11 @@
 
         public async Task<IActionResult> GetInTouch(string email, string message, string subject, string name)
         {
+            if (email == null || message == null || subject == null || name == null)
+            {
+                return this.RedirectToAction("Map");
+            }
+
             var user = await this.GetCurrentUserAsync();
             if (user != null)
             {

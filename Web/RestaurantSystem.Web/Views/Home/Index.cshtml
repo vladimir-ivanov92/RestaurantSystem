@@ -63,13 +63,16 @@
                             <a href="@item.Url" class="btn btn-primary">Details</a>
                             &nbsp;
                         </div>
-                        <div class="col-xs-4">
-                            <a href="/Orders/AddItem?itemId=@item.ItemId&page=@Model.CurrentPage&quantity=@Model.CurrentQuantity" class="btn btn-primary" id="addToCard">Add to card</a>
-                            &nbsp;
-                        </div>
-                        <div class="col-xs-2">
-                            <input type="number" name="quantity" id="quantity" class="form-control" style="width:70px;" value="0" min="0" max="@item.Quantity" />
-                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-xs-4">
+                                <a href="/Orders/AddItem?itemId=@item.ItemId&page=@Model.CurrentPage&quantity=@Model.CurrentQuantity" class="btn btn-primary" id="addToCard">Add to card</a>
+                                &nbsp;
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="number" name="quantity" id="quantity" class="form-control" style="width:70px;" value="0" min="0" max="@item.Quantity" />
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

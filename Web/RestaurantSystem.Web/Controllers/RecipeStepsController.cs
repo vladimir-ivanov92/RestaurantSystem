@@ -25,6 +25,11 @@
         [HttpGet]
         public IActionResult AddRecipeStep ([FromQuery(Name = "itemName")] string itemName)
         {
+            if (itemName == null)
+            {
+                return this.Redirect("/");
+            }
+
             var recipeStepViewModel = new RecipeStepViewModel { ItemName = itemName };
             return this.View(recipeStepViewModel);
         }
@@ -32,6 +37,11 @@
         [HttpPost]
         public async Task<IActionResult> AddRecipeStep(string description, int minutes, string itemName)
         {
+            if (description == null || minutes == 0)
+            {
+                return this.Redirect("/");
+            }
+
             await this.recipeStepService.AddRecipeStepToItem(description, minutes, itemName);
             var viewModel = this.itemService.GetByName<ItemViewModel>(itemName);
             return this.RedirectToAction("ByName", "Items", viewModel);
@@ -40,6 +50,11 @@
         [HttpGet]
         public IActionResult EditRecipeStep([FromQuery(Name = "itemName")] string itemName, [FromQuery(Name = "id")] int id)
         {
+            if (itemName == null || id == 0)
+            {
+                return this.Redirect("/");
+            }
+
             var viewRecipeViewModel = this.recipeStepService.GetById<RecipeStepViewModel>(id);
             viewRecipeViewModel.ItemName = itemName;
             return this.View(viewRecipeViewModel);
@@ -48,6 +63,11 @@
         [HttpPost]
         public async Task<IActionResult> EditRecipeStep(string description, int minutes, string itemName, int id)
         {
+            if (description == null || minutes == 0)
+            {
+                return this.Redirect("/");
+            }
+
             await this.recipeStepService.EditRecipeToItem(description, minutes, itemName, id);
             var viewModel = this.itemService.GetByName<ItemViewModel>(itemName);
             return this.RedirectToAction("ByName", "Items", viewModel);
@@ -56,6 +76,11 @@
         [HttpGet]
         public IActionResult DeleteRecipeStep([FromQuery(Name = "itemName")] string itemName, [FromQuery(Name = "id")] int id)
         {
+            if (itemName == null || id == 0)
+            {
+                return this.Redirect("/");
+            }
+
             var viewRecipeViewModel = this.recipeStepService.GetById<RecipeStepViewModel>(id);
             viewRecipeViewModel.ItemName = itemName;
             return this.View(viewRecipeViewModel);

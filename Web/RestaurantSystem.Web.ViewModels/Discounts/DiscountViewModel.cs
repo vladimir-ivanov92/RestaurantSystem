@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
 
     using RestaurantSystem.Data.Models;
@@ -9,6 +10,8 @@
 
     public class DiscountViewModel : IMapFrom<Discount>
     {
+        [Required]
+        [NonEmptyGuid]
         public string DiscountId { get; set; }
     }
 }

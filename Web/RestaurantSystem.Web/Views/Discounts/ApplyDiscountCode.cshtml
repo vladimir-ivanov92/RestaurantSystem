@@ -1,10 +1,18 @@
 ﻿@model RestaurantSystem.Web.ViewModels.Discounts.DiscountViewModel
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+
 <form method="post" action="/Discounts/ApplyDiscountCode">
 
-    <label for="name">Discount code: </label>
-    <input type="text" id="discountCode" name="discountCode" class="form-control" />
+    <label asp-for="DiscountId">Discount code: </label>
+    <input asp-for="DiscountId" type="text" id="discountCode" name="discountCode" class="form-control" />
+    <span asp-validation-for="DiscountId" class="text-danger"></span>
 
     <button type="submit" class="form-control">Check Code</button>
 
 </form>
+
+
+

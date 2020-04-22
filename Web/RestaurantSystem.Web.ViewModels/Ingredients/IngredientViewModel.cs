@@ -10,9 +10,11 @@
         public int Id { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        [Range(1,100)]
+        public int? Quantity { get; set; }
 
         [Required]
+        [MinLength(3)]
         public string Name { get; set; }
 
         public int ItemId { get; set; }

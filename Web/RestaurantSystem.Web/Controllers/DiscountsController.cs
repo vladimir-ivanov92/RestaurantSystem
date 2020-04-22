@@ -25,6 +25,11 @@ namespace RestaurantSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ApplyDiscountCode(string discountCode)
         {
+            if (discountCode == null)
+            {
+                return this.Redirect("/");
+            }
+
             bool getDiscount = await this.discountService.CheckDiscountCode(discountCode);
             if (getDiscount == true)
             {

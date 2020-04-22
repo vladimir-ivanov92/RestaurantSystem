@@ -44,6 +44,11 @@
 
         public async Task<IActionResult> AddItemAsync([FromQuery(Name = "page")] int page, int itemId, int quantity)
         {
+            if (itemId == 0 || quantity == 0)
+            {
+                return this.Redirect("/");
+            }
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
 
             var orderExist = this.orderService.CheckForExistingOrder(userId);
@@ -67,7 +72,17 @@
         public async Task<IActionResult> CheckOut()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return this.Redirect("/");
+            }
+
             var order = this.dbContext.Orders.Where(x => x.UserId == userId).FirstOrDefault();
+            if (order == null)
+            {
+                return this.Redirect("/");
+            }
+
             var user = await this.GetCurrentUserAsync();
             decimal sumPrice = 0.00M;
             decimal discount = 0.00M;
@@ -111,6 +126,7 @@
             {
                 await this.mailService.SendEmailAsync(user.Email, "MyApp", "vladimir920522@gmail.com", "Testing", "<h1>Order was made</h1>", null);
             }
+
             return this.View(netAmount);
         }
 

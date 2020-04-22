@@ -12,10 +12,13 @@
     {
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(50)]
         public string Description { get; set; }
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
 
+        [Range(1, 100)]
         public int Minutes { get; set; }
 
         public int ItemId { get; set; }
