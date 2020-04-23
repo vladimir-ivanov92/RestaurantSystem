@@ -24,5 +24,7 @@
         public decimal DeliveryTax { get; set; }
 
         public string DiscountCode { get; set; }
+
+        public string Address { get; set; }
     }
 }

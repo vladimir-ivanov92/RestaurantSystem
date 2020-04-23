@@ -13,7 +13,7 @@
         public int Id { get; set; }
 
         [Required]
-        [MinLength(50)]
+        [MinLength(200)]
         public string Description { get; set; }
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);

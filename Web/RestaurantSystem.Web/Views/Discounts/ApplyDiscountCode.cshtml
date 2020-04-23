@@ -6,6 +6,8 @@
 
 <form method="post" action="/Discounts/ApplyDiscountCode">
 
+    <div asp-validation-summary="All" class="text-danger"></div>
+
     <label asp-for="DiscountId">Discount code: </label>
     <input asp-for="DiscountId" type="text" id="discountCode" name="discountCode" class="form-control" />
     <span asp-validation-for="DiscountId" class="text-danger"></span>

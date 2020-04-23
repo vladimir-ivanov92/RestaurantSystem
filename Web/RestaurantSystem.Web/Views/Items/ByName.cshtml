@@ -85,6 +85,7 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck(@item.Id)">
                         <label class="custom-control-label" for="customCheck(@item.Id)">@item.Quantity @item.Name</label>
+                        <br>
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("Administrator"))
@@ -93,6 +94,7 @@
                                 <a href="/Ingredients/DeleteIngredient/?itemName=@Model.Name&id=@item.Id" class="btn delicious-btn" style="width: 2rem; margin-left:0; padding:0; float:right;">Delete</a>
                             }
                         }
+                        <br>
                     </div>
                     }
                 </div>

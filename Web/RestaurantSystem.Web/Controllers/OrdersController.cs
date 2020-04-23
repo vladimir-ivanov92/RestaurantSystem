@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -111,6 +112,7 @@
                 Discount = discount,
                 DeliveryTax = 2,
                 DiscountCode = this.discountService.GetDiscountCode(userId),
+                Address = user.Address,
             };
 
             Order alreadyDeliveredOrder = this.dbContext.Orders.FirstOrDefault(x => x.UserId == userId);
@@ -124,7 +126,7 @@
 
             if (user != null)
             {
-                await this.mailService.SendEmailAsync(user.Email, "MyApp", "vladimir920522@gmail.com", "Testing", "<h1>Order was made</h1>", null);
+                await this.mailService.SendEmailAsync(user.Email, "MyApp", "vladimir920522@gmail.com", "Incoming Order", $"<h1>{user.UserName} made an order for {netAmount.NetAmount}</h1>", null);
             }
 
             return this.View(netAmount);

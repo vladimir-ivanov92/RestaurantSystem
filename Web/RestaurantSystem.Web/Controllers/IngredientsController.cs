@@ -30,7 +30,7 @@
                 return this.Redirect("/");
             }
 
-            var viewIngredientViewModel = new IngredientViewModel { Name = itemName };
+            var viewIngredientViewModel = new IngredientViewModel { ItemName = itemName };
             return this.View(viewIngredientViewModel);
         }
 

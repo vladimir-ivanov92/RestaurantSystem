@@ -25,9 +25,6 @@
         [Url]
         public string ImageUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the needed time to prepare the item. It will be something between 1 and 30 minutes.
-        /// </summary>
         public int PreparationTime { get; set; }
 
         public decimal Price { get; set; }

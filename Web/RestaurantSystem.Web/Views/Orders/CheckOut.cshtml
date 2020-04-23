@@ -13,6 +13,15 @@
 
 
 <div class="container">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label htmlFor="product">Your address is</label>
+            <input type="text"
+                   id="address"
+                   class="form-control"
+                   value="@Model.Address"/>
+        </div>
+    </div>
     <form>
         @if (Model.Discount > 0)
         {
@@ -23,7 +32,7 @@
                            id="discount"
                            class="form-control"
                            value="$@String.Format("{0:0.00}", Model.Discount)"
-                           disabled/>
+                           disabled />
                 </div>
             </div>
         }
@@ -33,8 +42,8 @@
                 <input type="text"
                        id="delivery"
                        class="form-control"
-                       value="$@String.Format("{0:0.00}", Model.DeliveryTax)" 
-                       disabled/>
+                       value="$@String.Format("{0:0.00}", Model.DeliveryTax)"
+                       disabled />
             </div>
         </div>
 
@@ -45,7 +54,7 @@
                        id="netAmount"
                        class="form-control"
                        value="$@String.Format("{0:0.00}", Model.NetAmount+Model.DeliveryTax-Model.Discount)"
-                       disabled/>
+                       disabled />
             </div>
         </div>
 
@@ -65,6 +74,8 @@
                 </div>
             </div>
         }
+
+
         <div class="row">
             <div class="col-md-6">
                 <button id="submit" type="submit" class="btn btn-primary">

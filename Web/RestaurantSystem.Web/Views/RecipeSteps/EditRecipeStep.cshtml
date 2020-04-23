@@ -12,19 +12,22 @@
 
 <form method="post" action="/RecipeSteps/EditRecipeStep">
     <div class="container" style="width: 80%;">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div>
-            <label for="description">Description: </label>
-            <textarea id="description" name="description" value="" class="form-control"></textarea>
+            <label asp-for="Description">Description: </label>
+            <textarea asp-for="Description" id="description" name="description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <label for="minutes">Minutes: </label>
-        <input type="number" id="minutes" name="minutes" class="form-control" value="0" />
+        <label asp-for="Minutes">Minutes: </label>
+        <input asp-for="Minutes" type="number" id="minutes" name="minutes" class="form-control" value="@Model.Minutes" min="1" />
+        <span asp-validation-for="Description" class="text-danger"></span>
 
         <label for="itemName">Name: </label>
-        <input type="text" id="itemName" name="itemName" class="form-control" value="@Model.ItemName" disabled/>
+        <input type="text" id="itemName" name="itemName" class="form-control" value="@Model.ItemName" hidden />
 
         <label for="id">Name:</label>
-        <input type="hidden" id="Id" name="id" class="form-control" value="@Model.Id" disabled/>
+        <input type="hidden" id="Id" name="id" class="form-control" value="@Model.Id" hidden />
         <br />
         <button type="submit" class="form-control">Edit</button>
     </div>

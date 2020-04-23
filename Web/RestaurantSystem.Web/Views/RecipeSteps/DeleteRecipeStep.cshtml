@@ -12,11 +12,10 @@
 
 <form method="post" action="/RecipeSteps/DeleteRecipeStep">
     <div class="container" style="width: 80%;">
-        <label for="itemName">Name: </label>
-        <input type="text" id="itemName" name="itemName" class="form-control" value="@Model.ItemName" disabled/>
+        
+        <input type="text" id="itemName" name="itemName" class="form-control" value="@Model.ItemName" hidden/>
 
-        <label for="id">Name:</label>
-        <input type="hidden" id="Id" name="id" class="form-control" value="@Model.Id" />
+        <input id="Id" name="id" class="form-control" value="@Model.Id" hidden/>
         <br />
         <button type="submit" class="form-control">Delete</button>
     </div>
