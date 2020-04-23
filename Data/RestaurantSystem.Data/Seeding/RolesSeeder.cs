@@ -17,7 +17,13 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            List<string> roles = new List<string> { GlobalConstants.AdministratorRoleName, GlobalConstants.AdministratorRoleNameDriver };
+            List<string> roles = new List<string>
+            {
+                GlobalConstants.AdministratorRoleName,
+                GlobalConstants.AdministratorRoleNameDriver,
+                GlobalConstants.AdministratorRoleNameCook,
+                GlobalConstants.AdministratorRoleNameWaiter,
+            };
 
             foreach (string role in roles)
             {

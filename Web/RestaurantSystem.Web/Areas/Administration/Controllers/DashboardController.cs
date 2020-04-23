@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantSystem.Common;
+    using RestaurantSystem.Data;
     using RestaurantSystem.Services.Data;
     using RestaurantSystem.Web.Controllers;
     using RestaurantSystem.Web.ViewModels.Administration.Dashboard;
@@ -16,11 +18,13 @@
     {
         private readonly ISettingsService settingsService;
         private readonly IDashboardService dashboardService;
+        ApplicationDbContext dbContext;
 
-        public DashboardController(ISettingsService settingsService, IDashboardService dashboardService)
+        public DashboardController(ISettingsService settingsService, IDashboardService dashboardService, ApplicationDbContext dbContext)
         {
             this.settingsService = settingsService;
             this.dashboardService = dashboardService;
+            this.dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -87,6 +91,61 @@
             }
 
             return this.View(lstModel);
+        }
+
+        [HttpGet]
+        public IActionResult AssignRole()
+        {
+            var usersViewModel = new List<UserViewModel>();
+            var rolesViewModel = new List<RoleViewModel>();
+
+            foreach (var user in this.dbContext.Users)
+            {
+                var userViewModel = new UserViewModel
+                {
+                    UserName = user.UserName,
+                };
+                usersViewModel.Add(userViewModel);
+            }
+
+            foreach (var role in this.dbContext.Roles)
+            {
+                var roleViewModel = new RoleViewModel
+                {
+                    Name = role.Name,
+                };
+                rolesViewModel.Add(roleViewModel);
+            }
+
+            var assignRoleViewModel = new AssignRoleViewModel
+            {
+                Users = usersViewModel,
+                Roles = rolesViewModel,
+            };
+
+            return this.View(assignRoleViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AssignRole(string userName, string name)
+        {
+            var user = this.dbContext.Users.Where(x => x.UserName == userName).FirstOrDefault();
+            var role = this.dbContext.Roles.Where(x => x.Name == name).FirstOrDefault();
+
+            if (user != null && role != null)
+            {
+                IdentityUserRole<string> currentUserRole = this.dbContext.UserRoles.Where(x => x.UserId == user.Id).FirstOrDefault();
+                this.dbContext.UserRoles.Remove(currentUserRole);
+
+                this.dbContext.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id,
+                });
+                this.dbContext.SaveChanges();
+            }
+
+            return this.Redirect("/Administration/Dashboard");
         }
     }
 }

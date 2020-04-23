@@ -1,0 +1,44 @@
+﻿@model RestaurantSystem.Web.ViewModels.Administration.Dashboard.AssignRoleViewModel
+
+
+<h2>All registered users</h2>
+<ul style="list-style-type:circle;">
+    @foreach (var user in Model.Users)
+    {
+        <li>@user.UserName</li>
+    }
+</ul>
+
+<h2>All available roles</h2>
+<ul style="list-style-type:circle;">
+    @foreach (var role in Model.Roles)
+    {
+        <li>@role.Name</li>
+    }
+</ul>
+
+<form method="post" action="/Administration/Dashboard/AssignRole">
+    <div class="container" style="width: 18rem;">
+
+        <label for="userName">User name:</label>
+        @*<input type="text" id="userName" name="userName" class="form-control" />*@
+
+        <select id="userName" class="form-control">
+            @foreach (var user in Model.Users)
+            {
+            <option value="@user.UserName">@user.UserName</option>
+            }
+        </select>
+
+        <label for="name">Role name:</label>
+        @*<input type="text" id="name" name="name" class="form-control" />*@
+        <select id="name" class="form-control">
+            <option value="Administrator">Administrator</option>
+            <option value="Driver">Driver</option>
+            <option value="Waiter">Waiter</option>
+            <option value="Cook">Cook</option>
+        </select>
+        <br />
+        <button type="submit" class="form-control">Submit</button>
+    </div>
+</form>
