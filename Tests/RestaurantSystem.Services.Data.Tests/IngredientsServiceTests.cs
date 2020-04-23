@@ -37,7 +37,7 @@
             Assert.Equal(5, ingredient.Quantity);
         }
 
-        [Fact]  
+        [Fact]
         public async Task TestAddIngredientToItem()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -56,7 +56,7 @@
 
             var ingredientService = new IngredientService(itemRepository, ingredientrRepository);
 
-            AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
+            //AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
 
             await ingredientService.AddIngredientToItem(ingredient.Name, ingredient.Quantity, item.Name);
 
@@ -83,7 +83,7 @@
             var ingredient = ingredientrRepository.All().Where(x => x.Name == "Eggs").FirstOrDefault();
 
             var ingredientService = new IngredientService(itemRepository, ingredientrRepository);       
-            AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
+            //AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
 
             await ingredientService.AddIngredientToItem(ingredient.Name, ingredient.Quantity, item.Name);
 
@@ -103,25 +103,24 @@
             var ingredientrRepository = new EfRepository<Ingredient>(new ApplicationDbContext(options.Options));
             var itemRepository = new EfRepository<Item>(new ApplicationDbContext(options.Options));
 
-            ingredientrRepository.AddAsync(new Ingredient { Name = "Eggs", Quantity = 5 }).GetAwaiter().GetResult();
+            ingredientrRepository.AddAsync(new Ingredient { Name = "Meat", Quantity = 5 }).GetAwaiter().GetResult();
             ingredientrRepository.SaveChangesAsync().GetAwaiter().GetResult();
 
-            itemRepository.AddAsync(new Item { Name = "Meatball" }).GetAwaiter().GetResult();
+            itemRepository.AddAsync(new Item { Name = "Kebapche" }).GetAwaiter().GetResult();
             itemRepository.SaveChangesAsync().GetAwaiter().GetResult();
 
-            var item = itemRepository.All().Where(x => x.Name == "Meatball").FirstOrDefault();
-            var firstIngredient = ingredientrRepository.All().Where(x => x.Name == "Eggs").FirstOrDefault();
+            var item = itemRepository.All().Where(x => x.Name == "Kebapche").FirstOrDefault();
+            var firstIngredient = ingredientrRepository.All().Where(x => x.Name == "Meat").FirstOrDefault();
 
             var ingredientService = new IngredientService(itemRepository, ingredientrRepository);
 
-            AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
+            //AutoMapperConfig.RegisterMappings(typeof(MyTestIngredient).Assembly);
 
             await ingredientService.AddIngredientToItem(firstIngredient.Name, firstIngredient.Quantity, item.Name);
 
             await ingredientService.DeleteIngredientToItem(firstIngredient.Name, firstIngredient.Quantity, item.Name, 1);
             ingredientrRepository.SaveChangesAsync().GetAwaiter().GetResult();
-
-            Assert.Equal(1, ingredientrRepository.All().Count());
+            Assert.True(ingredientrRepository.All().Select(x => x.Name == "Meat").FirstOrDefault());
         }
 
         public class MyTestIngredient : IMapFrom<Ingredient>
