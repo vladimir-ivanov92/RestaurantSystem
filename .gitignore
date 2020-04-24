@@ -360,3 +360,4 @@ appsettings.Production.json
 GlobalConstants.cs
 /RestaurantSystem.Common/RestaurantSystem.Common.csproj
 /RestaurantSystem.Common
+/Web/RestaurantSystem.Web/appsettings.json
