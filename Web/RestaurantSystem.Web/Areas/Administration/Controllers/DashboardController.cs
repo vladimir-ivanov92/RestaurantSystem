@@ -135,7 +135,10 @@
             if (user != null && role != null)
             {
                 IdentityUserRole<string> currentUserRole = this.dbContext.UserRoles.Where(x => x.UserId == user.Id).FirstOrDefault();
-                this.dbContext.UserRoles.Remove(currentUserRole);
+                if (currentUserRole != null)
+                {
+                    this.dbContext.UserRoles.Remove(currentUserRole);
+                }
 
                 this.dbContext.UserRoles.Add(new IdentityUserRole<string>
                 {

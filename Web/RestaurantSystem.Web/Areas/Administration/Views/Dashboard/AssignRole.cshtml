@@ -23,7 +23,7 @@
         <label for="userName">User name:</label>
         @*<input type="text" id="userName" name="userName" class="form-control" />*@
 
-        <select id="userName" class="form-control">
+        <select name="userName" id="userName" class="form-control">
             @foreach (var user in Model.Users)
             {
             <option value="@user.UserName">@user.UserName</option>
@@ -32,11 +32,11 @@
 
         <label for="name">Role name:</label>
         @*<input type="text" id="name" name="name" class="form-control" />*@
-        <select id="name" class="form-control">
-            <option value="Administrator">Administrator</option>
-            <option value="Driver">Driver</option>
-            <option value="Waiter">Waiter</option>
-            <option value="Cook">Cook</option>
+        <select name="name" id="name" class="form-control">
+            <option  value="Administrator">Administrator</option>
+            <option  value="Driver">Driver</option>
+            <option  value="Waiter">Waiter</option>
+            <option  value="Cook">Cook</option>
         </select>
         <br />
         <button type="submit" class="form-control">Submit</button>

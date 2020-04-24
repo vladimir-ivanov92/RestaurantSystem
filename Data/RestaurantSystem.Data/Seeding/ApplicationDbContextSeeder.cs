@@ -30,7 +30,7 @@
                               new UserToRolesSeeder(),
                               new SettingsSeeder(),
                               new MenusSeeder(),
-                              new ItemsSeeder(),
+                              //new ItemsSeeder(),
                           };
 
             foreach (var seeder in seeders)
